@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Button, StyleSheet, Modal } from "react-native";
 
 const GoalInput = props => {
   const [enteredGoal, setEnteredGoal] = useState("");
@@ -8,17 +8,25 @@ const GoalInput = props => {
     setEnteredGoal(enteredText);
   };
 
+  const AddGoalHandler = () => {
+      props.onAddGoal(enteredGoal);
+      setEnteredGoal('');
+  };
+
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder="Add your Bucket list"
-        style={styles.input}
-        onChangeText={goalInputHandler}
-        value={enteredGoal}
-      />
-      {/*button을 누르면 onAddGoal function 을 수행함*/}
-      <Button title="ADD" onPress={props.onAddGoal.bind(this, enteredGoal)} />
-    </View>
+    <Modal visible={props.visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Add your Bucket list"
+          style={styles.input}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
+        />
+     
+        {/*button을 누르면 onAddGoal function 을 수행함*/}
+        <Button title="ADD" onPress={AddGoalHandler} />
+      </View>
+    </Modal>
   );
 };
 
@@ -26,15 +34,17 @@ const GoalInput = props => {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    /*flexDirection default is coloum이라서 row일때만 입력해줘도됨*/
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
   },
   input: {
     padding: 10,
     width: "80%",
     borderColor: "black",
-    borderWidth: 1
+    borderWidth: 1,
+    marginBottom: 10
   }
 });
 
