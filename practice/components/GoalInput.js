@@ -9,8 +9,8 @@ const GoalInput = props => {
   };
 
   const AddGoalHandler = () => {
-      props.onAddGoal(enteredGoal);
-      setEnteredGoal('');
+    props.onAddGoal(enteredGoal);
+    setEnteredGoal("");
   };
 
   return (
@@ -22,9 +22,15 @@ const GoalInput = props => {
           onChangeText={goalInputHandler}
           value={enteredGoal}
         />
-     
-        {/*button을 누르면 onAddGoal function 을 수행함*/}
-        <Button title="ADD" onPress={AddGoalHandler} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.Button}>
+            <Button title="CANCEL" color="red" onPress={props.onCancel} />
+          </View>
+          {/*button을 누르면 onAddGoal function 을 수행함*/}
+          <View style={styles.Button}>
+            <Button title="ADD" onPress={AddGoalHandler} />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -45,6 +51,14 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     marginBottom: 10
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "60%"
+  },
+  button: {
+    width: "40%"
   }
 });
 

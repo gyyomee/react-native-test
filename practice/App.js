@@ -24,11 +24,19 @@ export default function App() {
     });
   };
 
+  const cancelGoalAdditionHandler = () => {
+    setIsAddMode(false);
+  };
+
   return (
     <View style={styles.screen}>
-      <Button title="Add New Goal" onPress={() => setIsAddMode(true)}/>
+      <Button title="Add New Goal" onPress={() => setIsAddMode(true)} />
       {/*onAddGoal 또한 사용자 설정. button에게 props를 주어서 사용할 수 있도록함 */}
-      <GoalInput visible={isAddMode} onAddGoal={addGoalHandler} />
+      <GoalInput
+        visible={isAddMode}
+        onAddGoal={addGoalHandler}
+        onCancel={cancelGoalAdditionHandler}
+      />
       {/*GoalItem의 title에 item을 줌*/}
       <FlatList
         keyExtractor={(item, index) => item.id}
