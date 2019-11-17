@@ -10,33 +10,22 @@ import {
 } from "react-native";
 
 import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [enterGoal, setEnteredGoal] = useState("");
   const [couseGoals, setCoursgoals] = useState([]);
 
-  const goalInputHandler = enteredText => {
-    setEnteredGoal(enteredText);
-  };
-
-  const addGoalHandler = () => {
+  const addGoalHandler = goalTitle => {
     setCoursgoals(currentGoals => [
       ...currentGoals,
-      { key: Math.random().toString(), value: enterGoal }
+      { key: Math.random().toString(), value: goalTitle }
     ]);
   };
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Add your Bucket list"
-          style={styles.input}
-          onChangeText={goalInputHandler}
-          value={enterGoal}
-        />
-        <Button title="ADD" onPress={addGoalHandler} />
-      </View>
+      {/*onAddGoal 또한 사용자 설정. button에게 props를 주어서 사용할 수 있도록함 */}
+      <GoalInput onAddGoal={addGoalHandler} />
       {/*GoalItem의 title에 item을 줌*/}
       <FlatList
         keyExtractor={(item, index) => item.key}
@@ -49,16 +38,5 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 30
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  input: {
-    padding: 10,
-    width: "80%",
-    borderColor: "black",
-    borderWidth: 1
   }
 });
