@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
-  Button,
-  ScrollView,
   FlatList
 } from "react-native";
 
@@ -18,8 +14,15 @@ export default function App() {
   const addGoalHandler = goalTitle => {
     setCoursgoals(currentGoals => [
       ...currentGoals,
-      { key: Math.random().toString(), value: goalTitle }
+      { id: Math.random().toString(), value: goalTitle }
     ]);
+  };
+
+  const removeGoalHandler = goalId => {
+    setCoursgoals(currentGoals => {
+      /* new array 만들때 filter 사용. 같지 않을때만 저장하게 함 */
+      return currentGoals.filter(goal => goal.id !== goalId);
+    });
   };
 
   return (
@@ -28,9 +31,15 @@ export default function App() {
       <GoalInput onAddGoal={addGoalHandler} />
       {/*GoalItem의 title에 item을 줌*/}
       <FlatList
-        keyExtractor={(item, index) => item.key}
-        data={couseGoals}      
-        renderItem={itemData => <GoalItem title={itemData.item.value} />}
+        keyExtractor={(item, index) => item.id}
+        data={couseGoals}
+        renderItem={itemData => (
+          <GoalItem
+            id={itemData.item.id}
+            onDelete={removeGoalHandler.bind(this, itemData.item.id)}
+            title={itemData.item.value}
+          />
+        )}
       />
     </View>
   );
